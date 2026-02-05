@@ -1,7 +1,6 @@
 import json
 import os
 
-# Nom du fichier de sauvegarde défini dans ta roadmap
 STATE_FILE = "state.json"
 
 def charger_etat():
@@ -10,7 +9,6 @@ def charger_etat():
         with open(STATE_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     else:
-        # Structure initiale basée sur ton besoin d'initialisation
         return {
             "utilisateur": {
                 "nom": "",

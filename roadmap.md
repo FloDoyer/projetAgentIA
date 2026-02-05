@@ -12,12 +12,12 @@ Phase 1 : Préparation & Mémoire
 
 [X] Créer l'image du Workflow.
 
-[ ] Installer les outils.
+[X] Installer les outils.
 
-[ ] Configurer la structure de persistance initiale.
+[X] Configurer la structure de persistance initiale.
 
 Phase 2 : Construction du Cerveau 
-[ ] Initialisation : Créer le module qui demande ton nom, ton entreprise et tes missions.
+[X] Initialisation : Créer le module qui demande ton nom, ton entreprise et tes missions.
 
 [ ] Logique de décision : Programmer l'agent pour qu'il choisisse entre :
 

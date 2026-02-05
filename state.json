@@ -1,0 +1,10 @@
+{
+    "utilisateur": {
+        "nom": "",
+        "entreprise": "",
+        "missions": []
+    },
+    "plan": [],
+    "sections_redigees": {},
+    "etape_actuelle": "initialisation"
+}

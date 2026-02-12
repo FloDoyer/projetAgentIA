@@ -1,7 +1,9 @@
 from utils.state import charger_etat
 from agent import graph
+from dotenv import load_dotenv
 
 def lancement_agent():
+    load_dotenv()
     etat_initial = charger_etat()
     app = graph()
     print("Démarrage de l'agent...")

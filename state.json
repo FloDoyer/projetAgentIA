@@ -1,10 +1,16 @@
 {
-    "utilisateur": {
-        "nom": "",
-        "entreprise": "",
-        "missions": []
-    },
-    "plan": [],
-    "sections_redigees": {},
-    "etape_actuelle": "initialisation"
-}
+            "utilisateur": {
+                "nom": "",
+                "entreprise": "",
+                "missions": [],
+                "date_debut": "",
+                "lieu": "",
+                "durée": ""
+            },
+            "plan": [],
+            "sections_redigees": {},
+            "etape_actuelle": "initialisation",
+            "chapitre_en_cours": "",
+            "information": "",
+            "notes_locales": ""
+        }

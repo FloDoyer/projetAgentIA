@@ -13,7 +13,7 @@ def noeud_initialisation(state):
     if not utilisateur.get("entreprise"):
         utilisateur["entreprise"] = input("Nom de l'entreprise : ")
     if not utilisateur.get("date_debut"):
-        utilisateur["date_debut"] = input("Date de début (ex: 1er mars 2026) : ")
+        utilisateur["date_debut"] = input("Date de début (ex: 1 mars 2026) : ")
     if not utilisateur.get("lieu"):
         utilisateur["lieu"] = input("Lieu du stage (Ville) : ")
     if not utilisateur.get("durée"):
@@ -62,7 +62,7 @@ def noeud_recherche(state):
     tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
     entreprise = state["utilisateur"]["entreprise"]
     lieu = state["utilisateur"]["lieu"]
-    requete = query = f"Actualités et présentation de l'entreprise {entreprise} à {lieu}"
+    requete = f"Actualités et présentation de l'entreprise {entreprise} à {lieu}"
     resultats = tavily.search(query=requete, search_depth="advanced", max_results=3)
     info_web = "\n".join([res['content'] for res in resultats['results']])
     state["information"] = info_web
@@ -76,20 +76,85 @@ def noeud_recherche(state):
 
 
 def noeud_redaction(state):
-    chapitre_actuel = state["plan"][0] 
-    print(f"\n RÉDACTION : {chapitre_actuel} ")
-    notes_pertinentes = chercher_dans_journal(chapitre_actuel)
-    information = state.get('information', '')
-    prompt = f"""
-    Rédige le chapitre : "{chapitre_actuel}".
-    MES NOTES :
-    {notes_pertinentes}
-    INFOS ENTREPRISE :
-    {information}
-    CONSIGNE : Utilise les notes pour prouver tes dires par des exemples réels de mon stage.
+    """
+    redaction du chapitre actuel.
+    """
+    print("\n PHASE REDACTION ")
+    chapitre = state.get("chapitre_en_cours")
+    information = state.get("information", "Aucune info web.")
+    notes = state.get("notes_locales", "Aucune note de stage.")
+    missions = state["utilisateur"].get("missions", "")
+    prompt = f"""Tu es un expert en rédaction de rapports de stage de Master 2. 
+    Ton objectif est de rédiger le chapitre suivant : "{chapitre}".
+    DONNÉES DISPONIBLES :
+    - Missions du stagiaire : {missions}
+    - Notes: {notes}
+    - information {information}
+    CONSIGNES DE RÉDACTION :
+    1. Utilise exclusivement le format Markdown (titres ##, gras **, listes -).
+    2. Adopte un ton académique, professionnel et analytique.
+    3. Fais le lien entre la théorie (web) et ta pratique (note).
+    4. Si les notes sont riches, privilégie les détails techniques réels.
+    5. Ne conclus pas le rapport, rédige seulement ce chapitre de manière fluide.
     """
     llm = ChatMistralAI(model="mistral-large-latest")
     reponse = llm.invoke(prompt)
-    state["sections_redigees"][chapitre_actuel] = reponse.content
+    state["sections_redigees"][chapitre] = reponse.content
+    sauvegarder_etat(state)
+    return state
+
+def noeud_reprise_section(state):
+    """
+    Analyse la progression et définit le chapitre actif dans le state.
+    """
+    print("\n ANALYSE DE LA PROGRESSION ")
+    plan = state.get("plan", []) 
+    rediges = state.get("sections_redigees", {})
+    chapitre_suivant = None
+    for chapitre in plan:
+        if chapitre not in rediges:
+            chapitre_suivant = chapitre
+            break
+    if chapitre_suivant:
+        print(f"Nouveau chapitre détecté : {chapitre_suivant}")
+        state["chapitre_en_cours"] = chapitre_suivant
+        state["etape_actuelle"] = "analyse_besoin_infos"
+    else:
+        print("Tous les chapitres sont rédigés !")
+        state["chapitre_en_cours"] = None
+        state["etape_actuelle"] = "complet"
+    sauvegarder_etat(state) 
+    return state
+
+def noeud_rapport_final(state):
+    """Compile toutes les sections en un fichier final."""
+    print("\nGÉNÉRATION DU RAPPORT FINAL ")
+    entreprise = state["utilisateur"].get("entreprise", "Stage")
+    nom_etudiant = state["utilisateur"].get("nom", "Étudiant")
+    contenu_final = f"# Rapport de Stage - {entreprise}\n"
+    contenu_final += f"**Auteur :** {nom_etudiant}\n\n"
+    contenu_final += "---\n\n"
+    for chapitre in state["plan"]:
+        if chapitre in state["sections_redigees"]:
+            contenu_final += f"## {chapitre}\n\n"
+            contenu_final += f"{state['sections_redigees'][chapitre]}\n\n"
+    nom_fichier = f"Rapport_{entreprise.replace(' ', '_')}.md"
+    with open(nom_fichier, "w", encoding="utf-8") as f:
+        f.write(contenu_final)
+    print(f" Ton rapport est disponible ici : {nom_fichier}")
+    state["etape_actuelle"] = "termine"
+    sauvegarder_etat(state)
+    return state    
+
+
+def noeud_recherche_locale(state):
+    """
+    recherche dans tes notes de stage pour enrichir la rédaction.
+    """
+    chapitre = state.get("chapitre_en_cours")
+    print(f"\n RECHERCHE NOTES pour : {chapitre}")
+    notes_extraites = chercher_dans_journal(chapitre)
+    state["notes_locales"] = notes_extraites
+    state["etape_actuelle"] = "redaction"
     sauvegarder_etat(state)
     return state

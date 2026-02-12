@@ -13,15 +13,21 @@ def charger_etat():
             "utilisateur": {
                 "nom": "",
                 "entreprise": "",
-                "missions": []
+                "missions": [],
+                "date_debut": "",
+                "lieu": "",
+                "durée": ""
             },
             "plan": [],
             "sections_redigees": {},
-            "etape_actuelle": "initialisation"
+            "etape_actuelle": "initialisation",
+            "chapitre_en_cours": "",
+            "information": "",
+            "notes_locales": ""
         }
 
 def sauvegarder_etat(etat):
     """Sauvegarde l'état actuel dans le fichier JSON."""
     with open(STATE_FILE, "w", encoding="utf-8") as f:
         json.dump(etat, f, indent=4, ensure_ascii=False)
-    print("--- État sauvegardé avec succès ---")
+    print(" État sauvegardé avec succès ")

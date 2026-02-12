@@ -19,7 +19,7 @@ Phase 1 : Préparation & Mémoire
 Phase 2 : Construction du Cerveau 
 [X] Initialisation : Créer le module qui demande ton nom, ton entreprise et tes missions.
 
-[ ] Logique de décision : Programmer l'agent pour qu'il choisisse entre :
+[X] Logique de décision : Programmer l'agent pour qu'il choisisse entre :
 
 Chercher sur le Web (Tavily).
 

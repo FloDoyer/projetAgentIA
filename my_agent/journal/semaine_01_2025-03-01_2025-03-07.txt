@@ -1,0 +1,45 @@
+Semaine 01 (01/03/2025 - 07/03/2025)
+Sujet : Agent IA pour l'audit de logiciels
+
+Résumé
+- Démarrage du stage et cadrage du sujet.
+- Recueil des besoins : audit logiciel automatisé, traçabilité, conformité.
+- Plan de recherche défini : LLM, frameworks agentiques, concurrents.
+
+Travaux réalisés
+
+Jour 1-2 : Prise de poste et immersion
+- Rencontre avec le maître de stage et l'équipe technique.
+- Accès aux environnements de développement (GitHub, serveurs de test).
+- Lecture du cahier des charges : besoin d'automatiser l'audit de sécurité et qualité de code sur des projets variés (Python, Java, JavaScript).
+- Identification des outils actuels utilisés manuellement : SonarQube, Snyk, revues de code manuelles.
+
+Jour 3-4 : Définition du périmètre
+- Réunion de cadrage avec les parties prenantes (équipe DevSecOps, architectes).
+- Rédaction d'un document de synthèse listant les attentes :
+  * Automatisation complète du processus d'audit
+  * Support multi-langages et multi-technologies
+  * Traçabilité des décisions de l'agent
+  * Génération de rapports exploitables
+- Définition des critères d'évaluation des solutions :
+  * Autonomie : capacité à gérer les erreurs sans intervention humaine
+  * Contrôle : possibilité de définir des garde-fous et des workflows déterministes
+  * Coût : infrastructure, licences LLM, temps d'exécution
+  * Sécurité : isolation des environnements, gestion des secrets
+
+Jour 5 : Planification de la recherche
+- Élaboration d'un plan d'état de l'art structuré en 3 axes :
+  1. Étude des LLM disponibles (open source vs API propriétaires)
+  2. Comparatif des frameworks agentiques (SmolAgents, LangGraph, AutoGen, CrewAI, etc.)
+  3. Analyse de la concurrence et des solutions existantes sur le marché
+- Création d'une grille d'évaluation pour comparer les frameworks.
+- Mise en place d'un dépôt Git pour documenter les recherches et les prototypes.
+
+Difficultés / points d'attention
+- Besoin d'un bon équilibre entre autonomie de l'agent et contrôle du workflow.
+- Périmètre large : nécessité de prioriser les technologies à supporter en priorité.
+- Contrainte de temps : 6 mois pour livrer un prototype fonctionnel.
+
+Prochaines étapes
+- Lancer l'état de l'art sur les LLM (semaine 2).
+- Commencer la veille sur les frameworks agentiques (semaine 3).

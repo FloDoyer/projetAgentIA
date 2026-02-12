@@ -1,0 +1,54 @@
+Semaine 17 (21/06/2025 - 27/06/2025)
+
+Résumé
+- Implémentation des nœuds d'ingestion et de routage.
+
+Travaux réalisés
+
+Jour 1-2 : Implémentation du nœud d'ingestion
+- Création de nodes/ingest_node.py.
+- Fonctionnalités implémentées :
+  * Validation de l'URL GitHub
+  * Clone du dépôt avec git clone
+  * Gestion des erreurs (dépôt inexistant, problèmes réseau)
+  * Stockage du chemin local dans l'état
+- Tests unitaires : 10 cas de test (succès et échecs).
+- Normalisation des entrées : URL, token Sonar, clé de projet.
+
+Jour 2-3 : Implémentation du nœud de détection
+- Création de nodes/detect_type_node.py.
+- Prompt LLM optimisé pour détecter :
+  * Langage principal (Python, Java, JavaScript, PHP, etc.)
+  * Gestionnaire de build (Maven, Gradle, npm, pip, etc.)
+  * Indicateur multi-modules pour Java
+- Parsing structuré de la réponse LLM (JSON).
+- Tests sur 30 projets : 95% de précision.
+- Ajout d'un fallback si le LLM échoue.
+
+Jour 3-4 : Implémentation du nœud de routage
+- Création de nodes/route_node.py.
+- Fonction de routage conditionnel basée sur project_type :
+  * python/javascript/php → scan_interpreted_node
+  * maven → detect_java_version_node
+  * gradle → (futur)
+  * unknown → error_handler_node
+- Tests de routage sur 20 projets : 100% de précision.
+
+Jour 4-5 : Gestion des cas hybrides
+- Problème identifié : projets avec backend + frontend.
+- Solution implémentée : détection du langage dominant.
+- Ajustement du prompt LLM pour identifier le composant principal.
+- Tests sur 5 projets hybrides :
+  * Django + React : détection Python OK
+  * Spring Boot + Angular : détection Maven OK
+  * Express + Vue : détection JavaScript OK
+- Documentation des règles de détection.
+
+Difficultés / points d'attention
+- Gestion des cas hybrides (polyglottes) : résolu avec détection du langage dominant.
+- Parsing des réponses LLM : nécessité de valider le format JSON.
+- Tests unitaires chronophages mais essentiels.
+
+Prochaines étapes
+- Développer les nœuds d'exécution de scan (semaine 18).
+- Intégrer les scripts de scan Sonar.

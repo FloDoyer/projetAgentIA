@@ -1,0 +1,53 @@
+Semaine 14 (31/05/2025 - 06/06/2025)
+
+Résumé
+- Prototype Maven v3 avec agents Exécutant/Guide.
+
+Travaux réalisés
+
+Jour 1-2 : Conception du paradigme Exécutant/Guide
+- Inspiration des assistants de code (Windsurf, Cursor, Cline).
+- Architecture à 2 agents en parallèle :
+  * Exécutant : appelle les outils, prend les décisions finales
+  * Guide : analyse l'historique, résume, suggère la suite
+- Historiques séparés :
+  * Exécutant : prompt système + tâche + dernier message du Guide
+  * Guide : historique complet (prompt + tâche + messages + sorties outils)
+- Objectif : limiter le contexte de l'Exécutant, améliorer la planification.
+
+Jour 2-3 : Implémentation du prototype v3
+- Création de 2 nœuds LLM : executor_node et guide_node.
+- 3 outils pour l'Exécutant :
+  1. execute_command : exécute une commande dans le conteneur
+  2. ask_user : pose une question à l'utilisateur si nécessaire
+  3. finish_task : indique que la tâche est terminée
+- Le Guide génère un message de guidage après chaque action.
+- Boucle : Exécutant → Outils → Guide → Exécutant.
+- Code Python : ~300 lignes.
+
+Jour 3-4 : Tests du prototype v3
+- Tests sur les 5 projets Maven :
+  * spring-boot-boilerplate : succès (3 actions)
+  * java-spring-boot-boilerplate : succès (3 actions)
+  * BankingPortal-API : échec (bouclage infini)
+  * TelegramBots : échec (bouclage infini)
+  * opengrok : échec (bouclage infini)
+- Taux de réussite : 2/5 (40%)
+- Régression par rapport à v2 !
+
+Jour 4-5 : Analyse des problèmes
+- Problème majeur : l'Exécutant ne suit pas les consignes du Guide.
+- Après 3-4 itérations, l'Exécutant ignore le Guide.
+- Bouclage observé : l'Exécutant répète les mêmes actions.
+- L'Exécutant n'appelle jamais finish_task malgré le succès.
+- Test avec Llama 3 non-distillé : résultats légèrement meilleurs.
+- Hypothèse : les modèles raisonneurs ont du mal avec les consignes strictes.
+
+Difficultés / points d'attention
+- Bouclage possible de l'exécutant malgré les consignes : confirmé.
+- Le paradigme Exécutant/Guide ne fonctionne pas comme prévu.
+- Besoin de revoir la stratégie d'arrêt.
+
+Prochaines étapes
+- Ajuster la stratégie d'arrêt via l'API Sonar (semaine 15).
+- Retirer l'outil finish_task, utiliser l'API Sonar pour détecter le succès.

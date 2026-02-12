@@ -1,0 +1,53 @@
+Semaine 10 (03/05/2025 - 09/05/2025)
+
+Résumé
+- Stabilisation du chemin unique LangGraph.
+
+Travaux réalisés
+
+Jour 1 : Amélioration de la détection de type
+- Refonte du nœud detect_type avec un prompt LLM plus précis.
+- Ajout de la détection de sous-types :
+  * Java → Maven ou Gradle
+  * Python → requirements.txt, poetry, pipenv
+  * JavaScript → npm, yarn, pnpm
+- Tests de détection sur 20 projets : 100% de précision.
+- Ajout de fallback si le LLM ne peut pas déterminer le type.
+
+Jour 2 : Gestion des projets multi-langages
+- Identification du problème : certains projets contiennent plusieurs langages.
+- Solution implémentée : détection du langage principal.
+- Prompt LLM ajusté pour identifier le langage dominant.
+- Tests sur projets hybrides (ex: backend Python + frontend JS) : succès.
+
+Jour 3 : Ajout de la vectorisation RAG (expérimental)
+- Tentative d'ajout d'un RAG avec la documentation Sonar.
+- Vectorisation de 50 pages de documentation avec ChromaDB.
+- Tests : le RAG consomme trop de mémoire pour peu de valeur ajoutée.
+- Décision : abandonner le RAG, les informations peuvent être dans le prompt.
+
+Jour 4 : Tests de robustesse
+- Tests sur projets avec erreurs :
+  * Dépôt Git invalide : gestion d'erreur OK
+  * Projet sans fichier de build : détection et erreur claire
+  * Projet vide : gestion d'erreur OK
+- Ajout de validations dans le nœud ingest.
+- Amélioration des messages d'erreur pour le debugging.
+
+Jour 5 : Documentation et préparation Maven
+- Mise à jour de la documentation du workflow.
+- Création de diagrammes de séquence pour chaque chemin.
+- Étude préliminaire du processus Maven :
+  * Lecture de la documentation Maven et Sonar
+  * Identification des étapes : mvn clean verify + mvn compile sonar:sonar
+  * Problème identifié : besoin de détecter la version Java
+- Préparation d'un plan d'implémentation pour le chemin Maven.
+
+Difficultés / points d’attention
+- Gestion des cas limites pour les projets multi‑langages : résolu avec détection du langage principal.
+- RAG trop coûteux en mémoire : abandonné.
+- Complexité anticipée du chemin Maven.
+
+Prochaines étapes
+- Étude approfondie du chemin Maven (semaine 11).
+- Implémenter le prototype Maven v1.

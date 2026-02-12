@@ -1,0 +1,52 @@
+Semaine 11 (10/05/2025 - 16/05/2025)
+
+Résumé
+- Étude détaillée du scan Maven/Gradle pour l'audit.
+
+Travaux réalisés
+
+Jour 1-2 : Analyse du processus Maven
+- Étude de la documentation officielle Maven et Sonar.
+- Identification des étapes nécessaires :
+  1. mvn clean verify : vérification et récupération des dépendances
+  2. mvn compile sonar:sonar : compilation + scan Sonar
+- Prérequis identifiés :
+  * Version Java spécifique (8, 11, 17, 21)
+  * Maven installé ou wrapper Maven (mvnw)
+  * Configuration du pom.xml
+- Tests manuels sur 3 projets Maven pour comprendre le processus.
+
+Jour 2-3 : Gestion des versions Java
+- Problème : chaque projet nécessite une version Java différente.
+- Solution : utiliser des conteneurs Docker avec différentes images OpenJDK.
+- Images identifiées : eclipse-temurin, amazon-corretto.
+- Tests de détection de version Java :
+  * Lecture du pom.xml (balise <java.version>)
+  * Lecture du fichier .java-version
+  * Inférence via LLM si informations implicites
+- Création d'un script de détection de version Java.
+
+Jour 3-4 : Gestion des wrappers Maven
+- Identification du problème : certains projets ont mvnw, d'autres non.
+- Solution : détecter la présence de mvnw et adapter les commandes.
+- Tests sur projets avec et sans wrapper.
+- Problème découvert : droits d'exécution sur mvnw parfois manquants.
+
+Jour 4-5 : Sélection des projets de test Maven
+- Constitution d'un jeu de test de 5 projets Maven :
+  1. oracle/opengrok : complexe, multi-modules
+  2. rubenlagus/TelegramBots : moyen
+  3. Genc/spring-boot-boilerplate : simple
+  4. mewebstudio/java-spring-boot-boilerplate : simple
+  5. abhi9720/BankingPortal-API : moyen
+- Tests manuels pour comprendre les spécificités de chaque projet.
+- Documentation des commandes nécessaires pour chaque projet.
+
+Difficultés / points d'attention
+- Complexité élevée des environnements Java : multiples versions, configurations.
+- Gestion des projets multi-modules : nécessité de scanner chaque module.
+- Temps de compilation Maven parfois très long (>10 min).
+
+Prochaines étapes
+- Implémenter un prototype Maven v1 dans LangGraph (semaine 12).
+- Créer un nœud de détection de version Java.

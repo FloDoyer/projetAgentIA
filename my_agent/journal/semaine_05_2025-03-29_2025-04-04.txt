@@ -1,0 +1,60 @@
+Semaine 05 (29/03/2025 - 04/04/2025)
+
+Résumé
+- Lancement des tests sur SmolAgents.
+- Prototype simple agent avec outil d'exécution de commandes.
+
+Travaux réalisés
+
+Jour 1 : Configuration de l'environnement de test
+- Création d'un conteneur Docker Ubuntu 22.04 pour l'isolation.
+- Installation de tmux pour gérer les sessions persistantes.
+- Mise en place d'un système d'encapsulation des commandes :
+  * Commande → tmux send-keys → docker exec
+  * Permet de naviguer dans les répertoires et de maintenir l'état
+- Configuration de Llama 3 70B en local via Ollama.
+
+Jour 2 : Implémentation du premier prototype
+- Création d'un CodeAgent SmolAgents avec 3 outils :
+  1. execute_command : exécute une commande shell dans le conteneur
+  2. setup_python : installe Python, pip et pipx automatiquement
+  3. web_search : recherche sur DuckDuckGo (outil natif SmolAgents)
+- Prompt système définissant la mission : "Installer le projet depuis le README".
+- Architecture simple : un seul agent qui appelle les outils via génération de code Python.
+
+Jour 3 : Premiers tests sur projets simples
+- Test 1 : yt-dlp
+  * Résultat : succès (pip install yt-dlp)
+  * Temps : 2 minutes
+  * Observations : installation directe, aucun problème
+- Test 2 : sherlock
+  * Résultat : succès (pip install sherlock-project)
+  * Temps : 3 minutes
+  * Observations : agent a trouvé le bon nom de package
+
+Jour 4 : Tests sur projets complexes
+- Test 3 : manimgl
+  * Résultat : échec partiel
+  * Problème : dépendances système manquantes (libpango1.0-dev)
+  * Observations : agent a installé pip install manimgl mais n'a pas détecté les dépendances système
+  * L'agent a bouclé sur des erreurs sans chercher dans la documentation
+- Analyse des logs : l'agent ne suit pas de plan méthodique, essaie des solutions aléatoires.
+
+Jour 5 : Analyse des résultats et documentation
+- Taux de réussite : 2/3 (66%)
+- Problèmes identifiés :
+  * Pas de planification explicite avant l'action
+  * Variabilité élevée des approches entre les essais
+  * Difficulté à gérer les erreurs complexes
+  * L'agent n'utilise pas toujours les outils disponibles (setup_python)
+- Rédaction d'un rapport de test (8 pages) avec captures d'écran et logs.
+- Hypothèse : une architecture multi-agent avec un Manager pourrait améliorer la planification.
+
+Difficultés / points d'attention
+- Variabilité des réponses de l'agent lors des installations : même projet, approches différentes.
+- Absence de plan structuré : l'agent agit de manière réactive plutôt que proactive.
+- Difficulté à modifier le prompt système (problème de version SmolAgents).
+
+Prochaines étapes
+- Tester une architecture multi‑agent pour stabiliser les résultats (semaine 6).
+- Implémenter un agent Manager pour la planification.

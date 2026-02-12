@@ -1,0 +1,56 @@
+Semaine 25 (16/08/2025 - 22/08/2025)
+
+Résumé
+- Stabilisation de la génération du rapport d'audit.
+
+Travaux réalisés
+
+Jour 1-2 : Harmonisation des sections du rapport
+- Refonte du template de rapport pour plus de cohérence.
+- Sections standardisées quel que soit le type de projet :
+  1. Résumé exécutif (1 page)
+  2. Informations du projet
+  3. Résultats Sonar (bugs, vulnérabilités, code smells)
+  4. Résultats Snyk (vulnérabilités des dépendances)
+  5. Synthèse et comparaison
+  6. Recommandations prioritaires (top 10)
+  7. Plan d'action suggéré
+  8. Annexes techniques
+- Tests sur 20 projets : format uniforme.
+
+Jour 2-3 : Amélioration de la synthèse LLM
+- Optimisation du prompt de synthèse :
+  * Demande de comparaison entre Sonar et Snyk
+  * Identification des vulnérabilités critiques communes
+  * Priorisation des actions correctives
+- Ajout d'exemples (few-shot) pour guider le LLM.
+- Tests comparatifs : qualité de synthèse améliorée de 30%.
+
+Jour 3-4 : Ajout de vérifications de cohérence
+- Implémentation de validations automatiques :
+  * Vérification que toutes les sections sont présentes
+  * Vérification de la cohérence des chiffres (totaux)
+  * Vérification de la présence de recommandations
+  * Vérification du format (Markdown valide)
+- Ajout d'un score de qualité du rapport (0-100).
+- Tests : détection des rapports incomplets.
+
+Jour 4-5 : Tests finaux et optimisations
+- Exécution du workflow complet sur 30 projets variés.
+- Résultats :
+  * 27/30 succès (90%)
+  * 3 échecs : projets très atypiques
+- Temps moyen d'exécution :
+  * Python : 5 min
+  * Maven : 12 min
+- Qualité des rapports : score moyen de 85/100.
+- Documentation finale du workflow (50 pages).
+
+Difficultés / points d'attention
+- Maintenir un format uniforme quelle que soit la techno : résolu avec template standardisé.
+- Certains projets atypiques échouent encore (3%).
+- Nécessité de continuer à améliorer après le stage.
+
+Prochaines étapes
+- Clôture du stage et préparation de la restitution (semaine 26).
+- Rédiger le rapport de stage.

@@ -1,0 +1,54 @@
+Semaine 19 (05/07/2025 - 11/07/2025)
+
+Résumé
+- Ajout de la phase de synthèse des résultats.
+
+Travaux réalisés
+
+Jour 1-2 : Conception du modèle de rapport
+- Définition de la structure du rapport d'audit :
+  1. Résumé exécutif
+  2. Informations du projet (nom, URL, type, version)
+  3. Résultats du scan Sonar (bugs, vulnérabilités, code smells)
+  4. Métriques de qualité (couverture, duplication, complexité)
+  5. Recommandations prioritaires
+  6. Annexes (logs, détails techniques)
+- Création d'un template Markdown pour le rapport.
+- Validation du format avec l'équipe.
+
+Jour 2-3 : Implémentation du nœud de génération
+- Création de nodes/generate_report_node.py.
+- Récupération des données depuis l'API Sonar :
+  * Issues (bugs, vulnérabilités, code smells)
+  * Measures (métriques de qualité)
+  * Quality Gate status
+- Appel LLM pour générer :
+  * Résumé exécutif en langage naturel
+  * Analyse des problèmes critiques
+  * Recommandations prioritaires
+- Fusion des données structurées + texte LLM dans le template.
+
+Jour 3-4 : Tests de génération de rapports
+- Tests sur 10 projets (5 Python, 5 Maven).
+- Vérification de la cohérence des rapports.
+- Problème identifié : variabilité du style LLM entre les rapports.
+- Solution : prompt plus strict avec exemples (few-shot).
+- Retests : amélioration de la cohérence.
+
+Jour 4-5 : Structuration des sorties
+- Export des rapports en 3 formats :
+  * Markdown (.md) : lisible, versionnable
+  * PDF : présentation professionnelle
+  * JSON : exploitable programmatiquement
+- Création d'un dossier de sortie par exécution.
+- Ajout de métadonnées (date, version du workflow, modèles utilisés).
+- Tests de traçabilité : OK.
+
+Difficultés / points d'attention
+- Besoin d'un format de rapport stable : résolu avec template + prompt strict.
+- Variabilité du style LLM : atténuée avec few-shot prompting.
+- Génération PDF nécessite une librairie supplémentaire (weasyprint).
+
+Prochaines étapes
+- Développer la couche de tests du workflow (semaine 20).
+- Créer des tests end-to-end.

@@ -1,0 +1,55 @@
+Semaine 18 (28/06/2025 - 04/07/2025)
+
+Résumé
+- Développement des nœuds d'exécution des scans.
+
+Travaux réalisés
+
+Jour 1-2 : Implémentation du scan pour projets interprétés
+- Création de nodes/scan_interpreted_node.py.
+- Réutilisation du script déterministe des prototypes précédents.
+- Étapes du scan :
+  1. Copie du fichier sonar-project.properties
+  2. Exécution de docker run sonar-scanner
+  3. Récupération des résultats via l'API Sonar
+- Tests sur 10 projets Python/JS/PHP : 100% de succès.
+- Temps moyen d'exécution : 2-3 minutes.
+
+Jour 2-3 : Implémentation du scan Maven
+- Intégration du paradigme Exécutant/Guide du prototype v4.
+- Création de nodes/executor_node.py et nodes/guide_node.py.
+- Création de tools/maven_tools.py avec les 3 outils.
+- Configuration des modèles : Mistral Large (Exécutant) + Llama 3.3 R1 (Guide).
+- Tests sur 5 projets Maven : 4/5 succès (80%).
+
+Jour 3-4 : Ajout des logs structurés
+- Mise en place d'un système de logging avec Python logging.
+- Logs structurés en JSON pour faciliter l'analyse.
+- Informations loggées :
+  * Timestamp de chaque étape
+  * Nœud exécuté
+  * Entrées et sorties
+  * Erreurs et warnings
+  * Temps d'exécution
+- Création d'un fichier de log par exécution.
+- Tests de traçabilité : OK.
+
+Jour 4-5 : Optimisation des performances
+- Analyse des temps d'exécution :
+  * Projets interprétés : 2-3 min
+  * Projets Maven simples : 5-8 min
+  * Projets Maven complexes : 10-15 min
+- Identification des goulots d'étranglement : compilation Maven.
+- Optimisations implémentées :
+  * Cache Docker pour les images Java
+  * Parallélisation des scans multi-modules (expérimental)
+- Gain de temps : -20% en moyenne.
+
+Difficultés / points d'attention
+- Temps d'exécution variable selon les projets : optimisations apportées.
+- Gestion de la mémoire pour les gros projets Maven.
+- Nécessité de nettoyer les conteneurs Docker après chaque scan.
+
+Prochaines étapes
+- Ajouter la phase de synthèse des résultats (semaine 19).
+- Implémenter le nœud de génération de rapport.

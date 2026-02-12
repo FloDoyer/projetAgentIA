@@ -1,0 +1,63 @@
+Semaine 06 (05/04/2025 - 11/04/2025)
+
+Résumé
+- Passage à une architecture multi‑agent sur SmolAgents.
+- Tests sur plusieurs dépôts pour l'audit logiciel.
+
+Travaux réalisés
+
+Jour 1-2 : Conception de l'architecture multi-agent
+- Définition de 3 agents spécialisés :
+  1. Manager Agent : planification, coordination, analyse des résultats
+  2. Web Agent : recherche web (DuckDuckGo), visite de pages, récupération d'arborescence (Gitingest)
+  3. Command Agent : exécution de commandes, installation Python
+- Diagramme de flux créé pour visualiser les interactions.
+- Le Manager orchestre les appels aux agents secondaires et maintient le plan.
+
+Jour 2-3 : Implémentation du prototype multi-agent
+- Création des 3 agents avec leurs outils respectifs.
+- Problème identifié : le prompt système ne fonctionne pas correctement dans SmolAgents.
+- Solution de contournement : injection du prompt système dans la requête utilisateur.
+- Configuration des paramètres de sampling pour le Manager (temperature=0.3 pour plus de cohérence).
+- Mise en place d'un système de logs structurés pour suivre les décisions.
+
+Jour 3-4 : Tests comparatifs avec le prototype précédent
+- Reprise des 3 projets de la semaine 5 :
+  * yt-dlp : succès (2 min)
+  * sherlock : succès (3 min)
+  * manimgl : succès ! (8 min)
+    - Le Manager a demandé au Web Agent de chercher la documentation
+    - Identification des dépendances système manquantes
+    - Installation réussie avec apt install libpango1.0-dev
+- Taux de réussite : 3/3 (100%)
+- Amélioration nette de la planification : le Manager suit un plan structuré.
+
+Jour 4-5 : Tests sur projets supplémentaires
+- Ajout de 3 nouveaux projets Python :
+  * requests (simple) : succès
+  * django (moyen) : succès
+  * opencv-python (complexe) : échec partiel
+    - Problème de dépendances système complexes
+    - Le Manager s'est perdu dans les erreurs après 5 tentatives
+- Taux de réussite global : 5/6 (83%)
+- Observations :
+  * Le Manager ne sollicite pas assez le Web Agent
+  * Le Command Agent se perd parfois dans des boucles d'erreur
+  * Amélioration significative mais pas encore suffisante
+
+Jour 5 : Analyse et documentation
+- Rédaction d'un rapport comparatif (12 pages) : simple agent vs multi-agent.
+- Conclusion : l'architecture multi-agent améliore nettement les résultats (+17%).
+- Points d'amélioration identifiés :
+  * Meilleur encadrement des agents secondaires
+  * Prompts système fonctionnels (problème technique SmolAgents)
+  * Modèle raisonneur pour le Manager (DeepSeek R1 distillé)
+
+Difficultés / points d'attention
+- Instabilité encore élevée dans la résolution d'erreurs complexes.
+- Le Manager ne suit pas toujours son propre plan après plusieurs itérations.
+- Impossible de modifier les prompts système des agents secondaires.
+
+Prochaines étapes
+- Évaluer l'amélioration réelle et formaliser une conclusion SmolAgents (semaine 7).
+- Tester avec un modèle raisonneur pour le Manager.

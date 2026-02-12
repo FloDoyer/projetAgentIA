@@ -1,0 +1,51 @@
+Semaine 12 (17/05/2025 - 23/05/2025)
+
+Résumé
+- Prototype LangGraph Maven (v1).
+
+Travaux réalisés
+
+Jour 1-2 : Implémentation du nœud de détection Java
+- Création d'un nœud detect_java_version avec appel LLM.
+- Prompt LLM pour analyser le pom.xml et déduire la version Java.
+- Tests sur 10 projets : 90% de précision.
+- Ajout d'un fallback sur Java 17 si détection impossible.
+- Stockage de la version dans l'état du workflow.
+
+Jour 2-3 : Implémentation du nœud de scan Maven
+- Création du nœud scan_maven avec les étapes :
+  1. Lancement d'un conteneur Docker avec l'image Java appropriée
+  2. Détection de la présence de mvnw
+  3. Exécution de mvn clean verify (ou ./mvnw)
+  4. Exécution de mvn compile sonar:sonar avec les paramètres Sonar
+- Script Python de ~150 lignes.
+- Gestion des logs de sortie Maven.
+
+Jour 3-4 : Tests sur projets Maven
+- Tests sur les 5 projets sélectionnés :
+  * spring-boot-boilerplate : succès (5 min)
+  * java-spring-boot-boilerplate : succès (4 min)
+  * BankingPortal-API : succès (6 min)
+  * TelegramBots : échec (problème de droits sur mvnw)
+  * opengrok : échec (projet multi-modules complexe)
+- Taux de réussite : 3/5 (60%)
+
+Jour 4-5 : Analyse des échecs et corrections
+- Problème 1 : droits d'exécution sur mvnw
+  * Solution ajoutée : chmod +x mvnw avant exécution
+  * Tests : succès sur TelegramBots
+- Problème 2 : projets multi-modules
+  * Le scan global ne fonctionne pas
+  * Nécessité de scanner chaque module individuellement
+  * Solution temporaire : ajout manuel dans le script
+- Retests après corrections : 4/5 (80%)
+- Documentation des problèmes rencontrés et solutions.
+
+Difficultés / points d'attention
+- Erreurs liées aux droits et wrappers Maven : résolu avec chmod.
+- Projets multi-modules nécessitent une approche différente.
+- Le script devient trop spécifique, perd en adaptabilité.
+
+Prochaines étapes
+- Renforcer l'autonomie sur la gestion des erreurs (semaine 13).
+- Implémenter une boucle d'erreur avec génération de commandes par LLM.

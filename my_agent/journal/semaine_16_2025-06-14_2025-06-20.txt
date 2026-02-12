@@ -1,0 +1,64 @@
+Semaine 16 (14/06/2025 - 20/06/2025)
+
+Résumé
+- Démarrage du développement du workflow final LangGraph.
+
+Travaux réalisés
+
+Jour 1-2 : Architecture globale du workflow final
+- Synthèse des apprentissages des prototypes précédents.
+- Définition de l'architecture complète :
+  * Ingestion : clone du projet
+  * Détection : identification du type et sous-type
+  * Routage : aiguillage vers le chemin approprié
+  * Scan interprétés : script déterministe
+  * Scan Maven : paradigme Exécutant/Guide avec API Sonar
+  * Synthèse : génération du rapport d'audit
+- Création d'un diagramme de flux complet (15 nœuds).
+
+Jour 2-3 : Définition du schéma d'état
+- Extension du modèle State avec tous les champs nécessaires :
+  * Champs communs : project_url, project_path, project_type
+  * Champs Maven : java_version, has_maven_wrapper, is_multi_module
+  * Champs scan : scan_status, scan_results, sonar_key
+  * Champs rapport : audit_report, recommendations
+  * Champs techniques : errors, logs, retry_count
+- Documentation complète du modèle d'état (10 pages).
+
+Jour 3-4 : Cartographie des nœuds
+- Liste des 15 nœuds identifiés :
+  1. ingest_node : clone Git
+  2. detect_type_node : détection LLM
+  3. route_node : routage conditionnel
+  4. scan_interpreted_node : scan simple
+  5. detect_java_version_node : détection Java
+  6. setup_maven_container_node : préparation environnement
+  7. executor_node : exécution Maven
+  8. guide_node : planification Maven
+  9. check_sonar_api_node : vérification scan
+  10. generate_report_node : synthèse LLM
+  11. cleanup_node : nettoyage ressources
+  12. error_handler_node : gestion erreurs
+  13-15. Autres nœuds utilitaires
+- Définition des edges (normaux et conditionnels).
+
+Jour 4-5 : Préparation de l'implémentation
+- Création de la structure de fichiers du projet :
+  * workflow.py : graphe principal
+  * nodes/ : dossier avec un fichier par nœud
+  * tools/ : outils pour les agents
+  * utils/ : fonctions utilitaires
+  * config.py : configuration
+  * tests/ : tests unitaires
+- Mise en place d'un environnement virtuel Python.
+- Installation des dépendances (langgraph, langchain, docker, requests).
+- Création d'un fichier requirements.txt.
+
+Difficultés / points d'attention
+- Coordination des sorties LLM avec des étapes déterministes : architecture hybride.
+- Complexité du workflow : 15 nœuds à implémenter et tester.
+- Gestion de l'état partagé entre tous les nœuds.
+
+Prochaines étapes
+- Implémenter les nœuds d'ingestion et de routage (semaine 17).
+- Commencer les tests unitaires.

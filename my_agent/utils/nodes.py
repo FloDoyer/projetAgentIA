@@ -1,6 +1,7 @@
-from utils.state import sauvegarder_etat
 from langchain_mistralai import ChatMistralAI
 from tavily import TavilyClient
+from utils.state import sauvegarder_etat
+from utils.db import chercher_dans_journal
 import os
 
 def noeud_initialisation(state):
@@ -60,12 +61,35 @@ def noeud_recherche(state):
     
     tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
     entreprise = state["utilisateur"]["entreprise"]
-    lieu = ", ".join(state["utilisateur"]["lieu"])
+    lieu = state["utilisateur"]["lieu"]
     requete = query = f"Actualités et présentation de l'entreprise {entreprise} à {lieu}"
     resultats = tavily.search(query=requete, search_depth="advanced", max_results=3)
     info_web = "\n".join([res['content'] for res in resultats['results']])
     state["information"] = info_web
     state["etape_actuelle"] = "redaction"
     print("Recherche terminée et ajoutée au information.")
+    sauvegarder_etat(state)
+    return state
+
+
+
+
+
+def noeud_redaction(state):
+    chapitre_actuel = state["plan"][0] 
+    print(f"\n RÉDACTION : {chapitre_actuel} ")
+    notes_pertinentes = chercher_dans_journal(chapitre_actuel)
+    information = state.get('information', '')
+    prompt = f"""
+    Rédige le chapitre : "{chapitre_actuel}".
+    MES NOTES :
+    {notes_pertinentes}
+    INFOS ENTREPRISE :
+    {information}
+    CONSIGNE : Utilise les notes pour prouver tes dires par des exemples réels de mon stage.
+    """
+    llm = ChatMistralAI(model="mistral-large-latest")
+    reponse = llm.invoke(prompt)
+    state["sections_redigees"][chapitre_actuel] = reponse.content
     sauvegarder_etat(state)
     return state

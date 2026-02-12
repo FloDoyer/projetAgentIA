@@ -1,0 +1,50 @@
+Semaine 24 (09/08/2025 - 15/08/2025)
+
+Résumé
+- Intégration de l'outil Snyk au workflow d'audit.
+
+Travaux réalisés
+
+Jour 1-2 : Étude de Snyk
+- Recherche sur Snyk et ses capacités :
+  * Détection de vulnérabilités dans les dépendances
+  * Support multi-langages (Python, Java, JavaScript, etc.)
+  * API REST pour intégration
+- Création d'un compte Snyk et génération d'un token API.
+- Tests manuels de Snyk sur 5 projets.
+- Analyse des formats de sortie (JSON, HTML).
+
+Jour 2-3 : Implémentation du nœud Snyk
+- Création de nodes/snyk_scan_node.py.
+- Intégration de l'API Snyk :
+  * Authentification avec token
+  * Lancement du scan via snyk test
+  * Récupération des résultats en JSON
+- Ajout du nœud dans le graphe après le scan Sonar.
+- Tests sur 10 projets : succès.
+
+Jour 3-4 : Normalisation des résultats
+- Problème : formats différents entre Sonar et Snyk.
+- Création d'un modèle de données unifié :
+  * Vulnérabilités : sévérité, description, localisation
+  * Métriques : nombre par sévérité (critical, high, medium, low)
+- Transformation des sorties Sonar et Snyk vers le modèle unifié.
+- Tests de cohérence : OK.
+
+Jour 4-5 : Mise à jour du rapport d'audit
+- Ajout d'une section Snyk dans le template de rapport :
+  * Résumé des vulnérabilités détectées
+  * Comparaison Sonar vs Snyk
+  * Recommandations de mise à jour des dépendances
+- Appel LLM pour synthétiser les résultats multi-outils.
+- Tests de génération de rapports : qualité améliorée.
+- Déploiement de la nouvelle version sur staging.
+
+Difficultés / points d'attention
+- Harmonisation des résultats multi‑outils : résolu avec modèle unifié.
+- Temps d'exécution augmenté de 2-3 min avec Snyk.
+- Certaines vulnérabilités détectées par Snyk mais pas par Sonar (et vice-versa).
+
+Prochaines étapes
+- Stabiliser la génération du rapport final (semaine 25).
+- Améliorer la synthèse LLM des résultats multi-outils.

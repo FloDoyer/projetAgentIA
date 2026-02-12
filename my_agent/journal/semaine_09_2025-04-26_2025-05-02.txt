@@ -1,0 +1,63 @@
+Semaine 09 (26/04/2025 - 02/05/2025)
+
+Résumé
+- Premier prototype LangGraph (chemin unique).
+
+Travaux réalisés
+
+Jour 1-2 : Implémentation du graphe minimal
+- Création de 4 nœuds :
+  1. ingest_node : clone le projet Git
+  2. detect_type_node : appel LLM pour détecter le type de projet
+  3. scan_interpreted_node : scan Sonar pour projets interprétés
+  4. end_node : nœud terminal
+- Définition des edges :
+  * ingest → detect_type
+  * detect_type → scan_interpreted (conditionnel si type=python/js/php)
+  * scan_interpreted → end
+- Configuration de MemorySaver pour persister l'état.
+- Code Python : ~200 lignes pour le prototype.
+
+Jour 2-3 : Implémentation du nœud de scan
+- Script de scan pour projets interprétés :
+  1. Copie du fichier sonar-project.properties dans le projet
+  2. Exécution de la commande docker run sonar-scanner
+  3. Envoi automatique des résultats sur le serveur Sonar
+- Pas d'appel LLM dans ce nœud : script déterministe.
+- Gestion des erreurs avec try/except et logs.
+
+Jour 3-4 : Tests sur projets Python
+- Tests sur 5 projets Python :
+  * requests : succès (1 min)
+  * flask : succès (2 min)
+  * django : succès (3 min)
+  * numpy : succès (2 min)
+  * pandas : succès (3 min)
+- Taux de réussite : 5/5 (100%)
+- Observations :
+  * Le workflow est stable et prévisible
+  * Pas de volatilité comme avec SmolAgents
+  * Le scan fonctionne parfaitement pour les projets interprétés
+
+Jour 4 : Tests sur projets JavaScript et PHP
+- JavaScript : 3 projets testés, 3 succès
+- PHP : 2 projets testés, 2 succès
+- Taux de réussite global : 10/10 (100%)
+- Le chemin unique fonctionne pour tous les langages interprétés.
+
+Jour 5 : Documentation et analyse
+- Rédaction d'un rapport de prototype (10 pages).
+- Diagramme de flux du workflow créé.
+- Comparaison avec SmolAgents :
+  * LangGraph : 100% de réussite, comportement déterministe
+  * SmolAgents : 83% de réussite, comportement volatile
+- Conclusion : LangGraph est adapté pour notre cas d'usage.
+- Identification du prochain défi : implémenter le chemin Maven (plus complexe).
+
+Difficultés / points d'attention
+- Besoin de données de contexte pour guider le routage : résolu avec appel LLM.
+- Nécessité de bien gérer les erreurs dans chaque nœud.
+
+Prochaines étapes
+- Consolider le chemin unique et ajouter la détection de techno (semaine 10).
+- Étudier le processus de scan Maven pour préparer l'implémentation.

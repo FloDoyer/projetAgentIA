@@ -1,0 +1,48 @@
+Semaine 21 (19/07/2025 - 25/07/2025)
+
+Résumé
+- Renforcement de la gestion d'erreurs du workflow.
+
+Travaux réalisés
+
+Jour 1-2 : Implémentation des mécanismes de retry
+- Ajout d'un décorateur @retry pour les nœuds critiques.
+- Configuration des retries :
+  * Clone Git : 3 tentatives avec backoff exponentiel
+  * Appels API Sonar : 5 tentatives avec délai de 2s
+  * Exécution Maven : 2 tentatives
+- Tests sur scénarios d'échec temporaire : succès.
+- Réduction des échecs liés à des problèmes réseau : -30%.
+
+Jour 2-3 : Ajout de règles de fallback
+- Fallback pour la détection de type :
+  * Si LLM échoue → analyse heuristique (fichiers pom.xml, package.json, etc.)
+  * Si heuristique échoue → erreur explicite
+- Fallback pour la détection Java :
+  * Si LLM échoue → Java 17 par défaut
+- Tests : amélioration de la robustesse.
+
+Jour 3-4 : Amélioration des logs
+- Ajout de niveaux de log (DEBUG, INFO, WARNING, ERROR).
+- Logs contextuels avec identifiant d'exécution unique.
+- Ajout de métriques de performance dans les logs :
+  * Temps par nœud
+  * Mémoire utilisée
+  * Nombre de retries
+- Création d'un dashboard de monitoring (Grafana).
+
+Jour 4-5 : Limitation des boucles d'erreur
+- Ajout d'un compteur de tentatives global dans l'état.
+- Limite maximale : 10 tentatives pour l'ensemble du workflow.
+- Si limite atteinte → arrêt avec rapport d'échec détaillé.
+- Tests sur projets problématiques : arrêt propre au lieu de boucle infinie.
+- Documentation des stratégies de gestion d'erreurs.
+
+Difficultés / points d'attention
+- Limiter la boucle d'erreur pour éviter les dérives : résolu avec compteur global.
+- Équilibre entre retry et temps d'exécution acceptable.
+- Nécessité de bien documenter les erreurs pour le debugging.
+
+Prochaines étapes
+- Déployer un environnement de staging pour tests end‑to‑end (semaine 22).
+- Préparer l'infrastructure Terraform.

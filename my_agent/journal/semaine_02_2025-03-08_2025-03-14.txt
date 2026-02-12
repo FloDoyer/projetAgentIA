@@ -1,0 +1,52 @@
+Semaine 02 (08/03/2025 - 14/03/2025)
+
+Résumé
+- Recherche sur les LLM et leurs capacités pour l'audit logiciel.
+- Analyse des limites : hallucinations, sécurité, coût, confidentialité.
+
+Travaux réalisés
+
+Jour 1-2 : Étude des LLM disponibles
+- Recherche documentaire sur les modèles open source :
+  * Llama 3 (70B et 8B) : tests de capacité de raisonnement
+  * Mistral Large : évaluation de la qualité des réponses structurées
+  * DeepSeek R1 : analyse des capacités de "reasoning"
+- Comparaison des API propriétaires :
+  * OpenAI GPT-4 : coût élevé mais performances solides
+  * Anthropic Claude : bon équilibre qualité/coût
+  * Google Gemini : latence et disponibilité
+- Création d'un tableau comparatif (coût par token, latence, fenêtre de contexte, capacités multimodales).
+
+Jour 3 : Tests pratiques de génération de code
+- Mise en place d'un notebook Jupyter pour tester les LLM.
+- Scénarios de test :
+  * Génération de commandes shell pour installer des dépendances
+  * Analyse de logs d'erreur et proposition de solutions
+  * Génération de scripts d'audit basiques
+- Résultats : les modèles open source (Llama 3 70B) donnent des résultats comparables aux API pour des tâches simples.
+
+Jour 4 : Analyse des risques et limites
+- Documentation des problèmes identifiés :
+  * Hallucinations : génération de commandes inexistantes ou dangereuses
+  * Sécurité : risque d'injection de code malveillant
+  * Confidentialité : envoi de code propriétaire vers des API externes
+  * Coût : estimation à 500-2000€/mois selon le volume
+- Rédaction d'une note sur les garde-fous nécessaires :
+  * Validation des sorties avant exécution
+  * Sandboxing obligatoire (Docker, VM)
+  * Logs exhaustifs pour traçabilité
+  * Politique de retry et fallback
+
+Jour 5 : Synthèse et recommandations
+- Rédaction d'un rapport intermédiaire (15 pages) sur l'état de l'art LLM.
+- Recommandation : privilégier les modèles open source hébergés en interne pour la confidentialité.
+- Identification du besoin d'un framework pour structurer les interactions avec le LLM.
+
+Difficultés / points d'attention
+- Arbitrage entre coût d'inférence et fiabilité des sorties.
+- Difficulté à évaluer objectivement la qualité des réponses (pas de benchmark standard pour l'audit).
+- Nécessité de tester en conditions réelles sur de vrais projets.
+
+Prochaines étapes
+- Étudier les frameworks agentiques disponibles sur le marché (semaine 3).
+- Préparer une liste de projets open source pour les tests.

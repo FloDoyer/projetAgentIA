@@ -1,0 +1,52 @@
+Semaine 15 (07/06/2025 - 13/06/2025)
+
+Résumé
+- Prototype Maven v4 avec validation via l'API Sonar.
+
+Travaux réalisés
+
+Jour 1-2 : Implémentation de la validation par API Sonar
+- Retrait de l'outil finish_task.
+- Création d'un nœud check_sonar_api qui interroge l'API SonarQube.
+- Vérification : recherche d'un scan avec la clé de projet définie.
+- Si scan trouvé → fin du workflow, sinon → continue.
+- Ajout d'une attente utilisateur à chaque boucle (pour les tests).
+- Tests unitaires de l'API Sonar : succès.
+
+Jour 2-3 : Tests comparatifs de modèles
+- Tests de 3 combinaisons Exécutant/Guide :
+  1. Mistral Large / DeepSeek R1 Llama 3.3 70B
+  2. DeepSeek R1 / Mistral Large
+  3. Llama 3.3 70B / DeepSeek R1
+- Projets testés : les 5 projets Maven.
+- Résultats :
+  * Combinaison 1 : 4/5 (80%)
+  * Combinaison 2 : 2/5 (40%)
+  * Combinaison 3 : 4/5 (80%)
+
+Jour 3-4 : Analyse des différences entre modèles
+- Observations sur les modèles raisonneurs (DeepSeek R1) :
+  * Excellents pour résoudre des problèmes flous
+  * Difficulté à suivre des consignes arbitraires strictes
+  * Tendance à modifier les commandes données dans le prompt
+- Observations sur les modèles non-raisonneurs (Mistral, Llama 3.3) :
+  * Moins bons pour résoudre des problèmes complexes
+  * Excellents pour suivre des instructions précises
+  * Respectent les commandes définies dans le prompt
+- Conclusion : utiliser un non-raisonneur pour l'Exécutant, un raisonneur pour le Guide.
+
+Jour 4-5 : Tests finaux et documentation
+- Configuration optimale : Mistral Large (Exécutant) + Llama 3.3 R1 (Guide).
+- Tests sur 10 projets Maven (5 initiaux + 5 nouveaux) : 8/10 (80%).
+- Amélioration significative par rapport aux versions précédentes.
+- Rédaction d'un rapport comparatif des 4 prototypes Maven (20 pages).
+- Documentation des leçons apprises sur les modèles raisonneurs vs non-raisonneurs.
+
+Difficultés / points d'attention
+- Arbitrage entre modèles raisonneurs et non‑raisonneurs : résolu.
+- Combinaison optimale identifiée : non-raisonneur pour exécution, raisonneur pour planification.
+- Taux de réussite satisfaisant (80%) pour passer au développement final.
+
+Prochaines étapes
+- Démarrer le développement du workflow final LangGraph (semaine 16).
+- Intégrer tous les chemins (interprétés + Maven).

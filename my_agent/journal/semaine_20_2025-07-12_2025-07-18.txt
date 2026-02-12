@@ -1,0 +1,54 @@
+Semaine 20 (12/07/2025 - 18/07/2025)
+
+Résumé
+- Mise en place des tests du workflow LangGraph.
+
+Travaux réalisés
+
+Jour 1-2 : Création de la suite de tests
+- Mise en place de pytest pour les tests.
+- Création de tests/ avec 3 catégories :
+  * tests/unit/ : tests unitaires par nœud
+  * tests/integration/ : tests d'intégration entre nœuds
+  * tests/e2e/ : tests end-to-end sur le workflow complet
+- Constitution d'un jeu de test de 20 projets :
+  * 10 Python (variété de tailles et complexités)
+  * 10 Maven (simples et multi-modules)
+- Création de mocks pour les appels LLM (tests déterministes).
+
+Jour 2-3 : Tests end-to-end sur projets Python
+- Exécution du workflow complet sur 10 projets Python.
+- Résultats :
+  * 9/10 succès (90%)
+  * 1 échec : projet avec structure atypique
+- Temps moyen d'exécution : 3 minutes.
+- Vérification de la qualité des rapports générés : OK.
+
+Jour 3-4 : Tests end-to-end sur projets Maven
+- Exécution du workflow complet sur 10 projets Maven.
+- Résultats :
+  * 8/10 succès (80%)
+  * 2 échecs : projets avec dépendances manquantes
+- Temps moyen d'exécution : 8 minutes.
+- Taux de réussite global : 17/20 (85%).
+
+Jour 4-5 : Scénarios de défaillance
+- Tests de robustesse avec scénarios d'échec :
+  * URL GitHub invalide : gestion OK
+  * Dépôt privé sans accès : erreur claire
+  * Serveur Sonar indisponible : retry + erreur
+  * Timeout de compilation Maven : gestion OK
+  * Mémoire insuffisante : erreur explicite
+- Tests de variabilité des modèles LLM :
+  * 5 exécutions sur le même projet
+  * Variabilité observée : <5% (acceptable)
+- Documentation des cas limites.
+
+Difficultés / points d'attention
+- Variabilité des performances selon les modèles : acceptable (<5%).
+- Certains projets Maven très complexes échouent encore.
+- Temps d'exécution des tests e2e : ~2h pour la suite complète.
+
+Prochaines étapes
+- Renforcer la gestion d'erreurs et la reprise (semaine 21).
+- Implémenter des mécanismes de retry.

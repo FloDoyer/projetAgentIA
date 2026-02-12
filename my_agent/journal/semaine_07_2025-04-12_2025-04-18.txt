@@ -1,0 +1,63 @@
+Semaine 07 (12/04/2025 - 18/04/2025)
+
+Résumé
+- Analyse des résultats SmolAgents et limites identifiées.
+- Tentatives d'amélioration de la planification.
+
+Travaux réalisés
+
+Jour 1 : Dernier prototype SmolAgents avec modèle raisonneur
+- Remplacement du Manager par Llama 3 70B distillé de DeepSeek R1.
+- Retrait temporaire des actions pour tester uniquement la planification.
+- Objectif : évaluer si le modèle raisonneur améliore la qualité du plan.
+- Intégration de MLFlow pour tracer les expérimentations.
+
+Jour 2 : Tests de planification pure
+- Tests sur 5 projets avec demande de plan détaillé uniquement (sans exécution).
+- Résultats :
+  * Plans plus structurés avec le modèle raisonneur
+  * Mais toujours trop de volatilité entre les essais
+  * Le modèle a du mal à se détacher du README quand il manque des infos
+- Problème critique découvert : SmolAgents force l'exécution de code à chaque étape.
+  * Si pas de code dans la réponse, toute la réponse est considérée comme du code
+  * Provoque des erreurs qui perturbent l'agent
+
+Jour 3 : Tentatives de contournement
+- Recherche dans la documentation SmolAgents pour modifier le comportement.
+- Tentative de modification du prompt système : échec (méthode obsolète).
+- Tentative de forcer des étapes de réflexion pure : échec (erreurs de parsing).
+- Conclusion : limitation architecturale de SmolAgents pour notre cas d'usage.
+
+Jour 4 : Analyse comparative et bilan
+- Compilation des résultats de toutes les expérimentations SmolAgents.
+- Tableau récapitulatif :
+  * Prototype 1 (simple agent) : 66% de réussite
+  * Prototype 2 (multi-agent) : 83% de réussite
+  * Prototype 3 (raisonneur) : 70% de réussite (planification seule)
+- Identification des causes d'échec :
+  * Volatilité excessive due à la liberté totale de l'agent
+  * Impossibilité de contrôler finement le flux d'exécution
+  * Prompts système non modifiables dans les versions récentes
+  * Obligation d'exécuter du code à chaque étape
+
+Jour 5 : Décision stratégique et rédaction
+- Réunion avec le maître de stage pour présenter les résultats.
+- Décision : abandonner SmolAgents au profit de LangGraph.
+- Justification :
+  * Besoin de déterminisme pour un système de production
+  * Nécessité de contrôler le workflow étape par étape
+  * LangGraph offre un meilleur équilibre autonomie/contrôle
+- Rédaction d'un rapport de conclusion SmolAgents (18 pages) :
+  * Synthèse des 3 prototypes
+  * Analyse des forces et faiblesses
+  * Recommandations pour la suite
+  * Leçons apprises
+
+Difficultés / points d'attention
+- Difficile d'obtenir un comportement déterministe avec SmolAgents.
+- Framework encore immature, API instable entre les versions.
+- Temps investi important (3 semaines) mais apprentissage précieux.
+
+Prochaines étapes
+- Décider du maintien ou du changement de framework : décision prise → LangGraph.
+- Préparer la transition vers LangGraph (semaine 8).

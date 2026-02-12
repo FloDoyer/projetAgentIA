@@ -1,0 +1,67 @@
+Semaine 08 (19/04/2025 - 25/04/2025)
+
+Résumé
+- Décision de basculer sur LangGraph.
+- Préparation du plan de prototypage.
+
+Travaux réalisés
+
+Jour 1 : Formation LangGraph
+- Étude approfondie de la documentation LangGraph.
+- Tutoriels officiels : création de graphes, gestion d'état, nœuds conditionnels.
+- Différences clés avec SmolAgents :
+  * Définition explicite du modèle d'état (TypedDict)
+  * Workflow structuré en graphe de nœuds
+  * Contrôle fin des transitions (edges normaux et conditionnels)
+  * Gestion de la mémoire avec MemorySaver
+- Exemples de code testés pour comprendre les concepts.
+
+Jour 2 : Conception de l'architecture LangGraph
+- Définition des objectifs du workflow :
+  * Ingestion du projet (clone Git)
+  * Détection du type de projet (Python, Java, JavaScript, etc.)
+  * Routage vers le chemin de scan approprié
+  * Exécution du scan Sonar (et plus tard Snyk)
+  * Génération du rapport d'audit
+- Schéma du graphe global créé (5 nœuds principaux).
+- Identification des chemins de scan à implémenter :
+  1. Projets interprétés (Python, JS, PHP) : simple
+  2. Projets Maven (Java) : complexe
+  3. Projets Gradle (Java) : complexe
+
+Jour 3 : Définition du modèle d'état
+- Création d'une classe State (TypedDict) avec les champs :
+  * project_url : URL du dépôt GitHub
+  * project_path : chemin local du projet cloné
+  * project_type : type détecté (python, maven, gradle, etc.)
+  * java_version : version Java si applicable
+  * has_maven_wrapper : booléen pour Maven
+  * scan_results : résultats du scan Sonar
+  * errors : liste des erreurs rencontrées
+  * messages : historique des messages LLM
+- Documentation du modèle d'état.
+
+Jour 4 : Préparation des jeux de tests
+- Extension de la liste de projets de test :
+  * Python : 5 projets (simple à complexe)
+  * Java Maven : 5 projets (OpenGrok, TelegramBots, etc.)
+  * Java Gradle : 3 projets
+  * JavaScript : 3 projets
+- Création d'un script de test automatisé pour exécuter les scans.
+- Mise en place d'un système de métriques (temps, succès, logs).
+
+Jour 5 : Configuration de l'environnement
+- Installation de LangGraph et dépendances (langgraph, langchain).
+- Configuration du serveur SonarQube de test.
+- Création de tokens Sonar pour les scans.
+- Préparation des conteneurs Docker pour l'isolation.
+- Mise en place d'un dépôt Git dédié au projet LangGraph.
+
+Difficultés / points d'attention
+- Nécessité de définir un modèle d'état explicite : courbe d'apprentissage.
+- Changement de paradigme par rapport à SmolAgents.
+- Besoin de bien structurer le workflow dès le départ.
+
+Prochaines étapes
+- Démarrer le premier prototype LangGraph (semaine 9).
+- Implémenter le chemin unique pour projets interprétés.

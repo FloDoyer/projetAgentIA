@@ -1,0 +1,55 @@
+Semaine 22 (26/07/2025 - 01/08/2025)
+
+Résumé
+- Préparation du déploiement via Terraform.
+
+Travaux réalisés
+
+Jour 1-2 : Architecture de l'infrastructure
+- Définition de l'architecture cloud (AWS) :
+  * EC2 pour l'exécution du workflow
+  * S3 pour le stockage des rapports
+  * RDS pour la base de données de traçabilité
+  * Secrets Manager pour les tokens
+  * CloudWatch pour le monitoring
+- Schéma d'architecture créé et validé.
+- Estimation des coûts : ~200€/mois.
+
+Jour 2-3 : Création des modules Terraform
+- Création de terraform/ avec 5 modules :
+  1. compute.tf : instances EC2, auto-scaling
+  2. storage.tf : buckets S3, lifecycle policies
+  3. database.tf : RDS PostgreSQL
+  4. secrets.tf : Secrets Manager
+  5. monitoring.tf : CloudWatch, alarmes
+- Variables paramétrables : région, taille instances, etc.
+- Tests de validation Terraform : terraform validate OK.
+
+Jour 3-4 : Gestion sécurisée des secrets
+- Stockage des secrets dans AWS Secrets Manager :
+  * Token SonarQube
+  * Clés API LLM (Mistral, OpenAI)
+  * Credentials GitHub
+- Configuration de l'accès IAM avec principe du moindre privilège.
+- Rotation automatique des secrets tous les 90 jours.
+- Tests d'accès : OK.
+
+Jour 4-5 : Paramétrage des variables d'environnement
+- Création de fichiers .env pour chaque environnement :
+  * dev.tfvars : environnement de développement
+  * staging.tfvars : environnement de staging
+  * prod.tfvars : environnement de production
+- Configuration des variables :
+  * URLs des services (Sonar, LLM)
+  * Paramètres de ressources (CPU, RAM)
+  * Timeouts et limites
+- Documentation complète du déploiement (15 pages).
+
+Difficultés / points d'attention
+- Gestion sécurisée des secrets (tokens Sonar, LLM) : résolu avec Secrets Manager.
+- Complexité de Terraform pour un débutant : courbe d'apprentissage.
+- Nécessité de tester sur staging avant production.
+
+Prochaines étapes
+- Exécuter le déploiement et valider la stack (semaine 23).
+- Provisionner l'environnement de staging.

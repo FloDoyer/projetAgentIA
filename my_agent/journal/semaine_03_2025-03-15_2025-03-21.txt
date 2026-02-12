@@ -1,0 +1,58 @@
+Semaine 03 (15/03/2025 - 21/03/2025)
+
+Résumé
+- État de l'art des frameworks agentiques.
+- Focus sur SmolAgents, LangGraph, AutoGen, CrewAI.
+
+Travaux réalisés
+
+Jour 1 : Recensement des frameworks
+- Recherche sur GitHub, forums (Reddit, Discord), articles de blog.
+- Liste de 9 frameworks identifiés : SmolAgents, LangGraph, AutoGen, CrewAI, OpenAI Swarm, Magentic-One, Agno, PydanticAI, SemanticKernel.
+- Clonage des dépôts et lecture des README pour comprendre les philosophies.
+
+Jour 2 : Analyse de SmolAgents
+- Lecture de la documentation HuggingFace.
+- Points forts identifiés :
+  * Simplicité de mise en œuvre (< 50 lignes pour un agent basique)
+  * Support des "code-agents" (génération de code Python exécutable)
+  * Intégration native avec HuggingFace Hub
+- Points faibles :
+  * Peu de contrôle sur le flux d'exécution
+  * Documentation encore incomplète
+  * Framework jeune, API instable
+
+Jour 3 : Analyse de LangGraph et AutoGen
+- LangGraph :
+  * Approche workflow avec graphes de nœuds
+  * Flexibilité maximale mais complexité élevée
+  * Bonne documentation et communauté active
+  * Nécessite de définir explicitement l'état et les transitions
+- AutoGen :
+  * Focus sur les tâches de codage
+  * Architecture multi-agents avec User-Agent et Assistant-Agent
+  * Configuration complexe, surtout pour modèles locaux
+  * Support Microsoft mais moins adapté aux tâches non-dev
+
+Jour 4 : Analyse de CrewAI et autres frameworks
+- CrewAI : très intuitif mais peu flexible, orienté non-développeurs.
+- OpenAI Swarm : simple mais limité à OpenAI, non production-ready.
+- Magentic-One : peu de documentation, support limité.
+- Agno, PydanticAI, SemanticKernel : frameworks plus spécialisés.
+
+Jour 5 : Synthèse comparative
+- Création d'un tableau comparatif sur 8 critères :
+  * Flexibilité, Complexité, Maturité, Support communautaire
+  * Compatibilité multi-LLM, Gestion de la mémoire
+  * Déterminisme du workflow, Facilité de debug
+- Rédaction d'une note de synthèse (10 pages) avec recommandations préliminaires.
+- Identification de 2 candidats principaux : SmolAgents (simplicité) et LangGraph (contrôle).
+
+Difficultés / points d'attention
+- Évaluation de la compatibilité avec un workflow déterministe : LangGraph semble mieux adapté.
+- Difficulté à trouver des retours d'expérience en production.
+- Nécessité de tester concrètement pour valider les hypothèses.
+
+Prochaines étapes
+- Consolidation du rapport d'état de l'art (semaine 4).
+- Préparer des prototypes de test pour SmolAgents.

@@ -1,0 +1,53 @@
+Semaine 23 (02/08/2025 - 08/08/2025)
+
+Résumé
+- Déploiement sur Terraform et tests end‑to‑end.
+
+Travaux réalisés
+
+Jour 1-2 : Provisionnement de l'infrastructure
+- Exécution de terraform init et terraform plan.
+- Déploiement sur staging avec terraform apply.
+- Ressources provisionnées :
+  * 2 instances EC2 t3.large
+  * 1 bucket S3 avec versioning
+  * 1 RDS PostgreSQL db.t3.micro
+  * Secrets Manager configuré
+  * CloudWatch avec 5 alarmes
+- Temps de provisionnement : 15 minutes.
+- Vérification de l'infrastructure : OK.
+
+Jour 2-3 : Déploiement du workflow
+- Installation des dépendances Python sur les instances EC2.
+- Configuration de Docker sur les instances.
+- Déploiement du code du workflow via Git.
+- Configuration des variables d'environnement.
+- Tests de connectivité : Sonar, LLM, GitHub : OK.
+
+Jour 3-4 : Tests end-to-end en staging
+- Exécution du workflow sur 10 projets de test.
+- Résultats :
+  * 8/10 succès (80%)
+  * 2 échecs : timeout sur gros projets Maven
+- Problème identifié : ressources insuffisantes pour projets complexes.
+- Ajustements apportés :
+  * Passage de t3.large à t3.xlarge
+  * Augmentation du timeout de 15 min à 30 min
+- Retests : 10/10 succès (100%).
+
+Jour 4-5 : Validation et monitoring
+- Configuration des dashboards CloudWatch.
+- Tests de monitoring : métriques collectées correctement.
+- Tests de scaling : auto-scaling fonctionne.
+- Tests de résilience : redémarrage automatique en cas d'échec.
+- Documentation du déploiement et des procédures d'exploitation.
+- Validation finale avec l'équipe : OK pour passer à la suite.
+
+Difficultés / points d'attention
+- Ajustements de ressources nécessaires pour certains scans : résolu avec t3.xlarge.
+- Coûts légèrement supérieurs aux prévisions (~250€/mois).
+- Nécessité d'optimiser les ressources pour réduire les coûts.
+
+Prochaines étapes
+- Intégrer Snyk dans la chaîne d'audit (semaine 24).
+- Ajouter un nœud Snyk au workflow.

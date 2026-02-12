@@ -1,0 +1,46 @@
+Semaine 13 (24/05/2025 - 30/05/2025)
+
+Résumé
+- Prototype Maven v2 avec génération de commandes par LLM.
+
+Travaux réalisés
+
+Jour 1-2 : Refonte avec génération de commandes par LLM
+- Remplacement du script fixe par un nœud generate_commands.
+- Le LLM génère la liste des commandes Maven à exécuter.
+- Contexte fourni au LLM : version Java, présence de mvnw, multi-modules.
+- Prompt demandant de scanner les modules individuellement si nécessaire.
+- Ajout d'un nœud validate_commands pour reformater la sortie LLM.
+
+Jour 2-3 : Implémentation de la boucle d'erreur
+- Création d'un edge conditionnel : si erreur → retour à generate_commands.
+- Le LLM reçoit l'historique + les logs d'erreur.
+- Limite de 5 tentatives pour éviter les boucles infinies.
+- Tests sur projets simples : succès.
+
+Jour 3-4 : Tests sur projets complexes
+- Tests sur les 5 projets Maven :
+  * spring-boot-boilerplate : succès (1 tentative)
+  * java-spring-boot-boilerplate : succès (1 tentative)
+  * BankingPortal-API : succès (2 tentatives)
+  * TelegramBots : succès (2 tentatives)
+  * opengrok : échec (5 tentatives, erreur de dépendances)
+- Taux de réussite : 4/5 (80%)
+- Amélioration par rapport à v1 mais pas suffisant.
+
+Jour 4-5 : Analyse des problèmes de la boucle
+- Observation : le LLM se perd dans les erreurs complexes.
+- Problème identifié : trop d'informations dans l'historique.
+- Le LLM part dans des directions éloignées de la solution.
+- Exemple : sur opengrok, le LLM a essayé de modifier le pom.xml.
+- Conclusion : la boucle d'erreur simple n'est pas suffisante.
+- Hypothèse : séparer planification et exécution pourrait aider.
+
+Difficultés / points d'attention
+- Risque de perte de contexte dans les boucles : confirmé.
+- Le LLM persévère dans des directions incorrectes.
+- Besoin d'un meilleur guidage pour l'agent.
+
+Prochaines étapes
+- Évaluer une approche "exécutant/guide" (semaine 14).
+- Séparer la planification de l'exécution.

@@ -1,0 +1,52 @@
+Semaine 04 (22/03/2025 - 28/03/2025)
+
+Résumé
+- Finalisation de l'état de l'art.
+- Définition d'une première hypothèse d'architecture agentique.
+
+Travaux réalisés
+
+Jour 1-2 : Finalisation du rapport d'état de l'art
+- Consolidation des recherches des semaines précédentes dans un document unique (35 pages).
+- Structure du rapport :
+  * Introduction et contexte du projet
+  * Analyse des LLM (8 modèles comparés)
+  * Analyse des frameworks agentiques (9 frameworks)
+  * Solutions concurrentes identifiées (Rezolve.ai)
+  * Recommandations et plan d'action
+- Relecture et validation par le maître de stage.
+
+Jour 3 : Définition de l'architecture cible
+- Réunion de travail avec l'équipe technique.
+- Proposition de 3 architectures possibles :
+  1. Architecture basée sur l'agent (SmolAgents) : liberté maximale, volatilité élevée
+  2. Architecture basée sur le workflow (LangGraph) : contrôle élevé, complexité importante
+  3. Architecture hybride : workflow avec agents autonomes sur certains nœuds
+- Décision : commencer par tester SmolAgents pour valider rapidement le concept.
+
+Jour 4 : Formalisation des critères de réussite
+- Définition des KPI du projet :
+  * Taux de réussite des audits (objectif : >80%)
+  * Temps moyen d'exécution (objectif : <15 min par projet)
+  * Taux d'intervention humaine (objectif : <10%)
+  * Qualité des rapports générés (évaluation qualitative)
+- Création d'un jeu de tests standardisé : 10 projets open source (Python, Java, JavaScript).
+- Mise en place d'un tableau de bord pour suivre les métriques.
+
+Jour 5 : Préparation des tests SmolAgents
+- Installation de SmolAgents et dépendances (transformers, torch).
+- Configuration d'un environnement de test isolé (Docker).
+- Sélection des premiers projets à tester :
+  * yt-dlp (Python, installation simple)
+  * sherlock (Python, installation rapide)
+  * manimgl (Python, installation complexe avec dépendances système)
+- Rédaction d'un protocole de test pour assurer la reproductibilité.
+
+Difficultés / points d'attention
+- Forte disparité de documentation selon les frameworks : nécessité de tester pour valider.
+- Incertitude sur la capacité de SmolAgents à gérer des cas complexes.
+- Besoin de définir des métriques objectives pour comparer les frameworks.
+
+Prochaines étapes
+- Démarrer les tests pratiques avec SmolAgents (semaine 5).
+- Implémenter le premier prototype (simple agent).

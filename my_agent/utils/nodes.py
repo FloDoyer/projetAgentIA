@@ -3,6 +3,7 @@ from tavily import TavilyClient
 from utils.state import sauvegarder_etat
 from utils.db import chercher_dans_journal
 import os
+from fpdf import FPDF
 
 def noeud_initialisation(state):
     """Demande les infos à l'utilisateur si elles sont absentes du state."""
@@ -126,8 +127,12 @@ def noeud_reprise_section(state):
     sauvegarder_etat(state) 
     return state
 
+
+"""
 def noeud_rapport_final(state):
-    """Compile toutes les sections en un fichier final."""
+""" 
+"""Compile toutes les sections en un fichier final."""
+"""
     print("\nGÉNÉRATION DU RAPPORT FINAL ")
     entreprise = state["utilisateur"].get("entreprise", "Stage")
     nom_etudiant = state["utilisateur"].get("nom", "Étudiant")
@@ -145,7 +150,29 @@ def noeud_rapport_final(state):
     state["etape_actuelle"] = "termine"
     sauvegarder_etat(state)
     return state    
+    """
 
+def noeud_rapport_final(state):
+    print("\n GÉNÉRATION DU RAPPORT FINAL ")
+    sections = state.get("sections_redigees", {})
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    for titre, contenu in sections.items():
+        texte_propre = (contenu.replace('**', '')
+                               .replace('#', '')
+                               .replace('’', "'") 
+                               .replace('–', '-') 
+                               .encode('latin-1', 'ignore') 
+                               .decode('latin-1'))
+        pdf.set_font("Arial", 'B', 16)
+        pdf.multi_cell(0, 10, txt=titre.replace('**', '').replace('’', "'"))
+        pdf.ln(5)
+        pdf.set_font("Arial", size=12)
+        pdf.multi_cell(0, 8, txt=texte_propre)
+        pdf.ln(10)
+    pdf.output("Rapport_Final.pdf")
+    return state
 
 def noeud_recherche_locale(state):
     """

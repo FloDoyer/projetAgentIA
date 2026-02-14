@@ -37,4 +37,4 @@ Phase 3 : Rédaction & Intelligence
 Phase 4 : Finition & Bonus
 [ ] Sécurité : Vérifier que l'IA ne génère pas de contenu dangereux.
 
-[ ] Export PDF : Transformer le résultat final en un beau document PDF.
+[X] Export PDF : Transformer le résultat final en un beau document PDF.

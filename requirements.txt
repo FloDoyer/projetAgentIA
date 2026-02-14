@@ -18,3 +18,4 @@
     python-dotenv
     mlflow
     langgraph>=0.2.0
+    fpdf2
